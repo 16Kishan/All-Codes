@@ -1,16 +1,21 @@
-public class Solution {
-    public boolean isSubtree(TreeNode s, TreeNode t) {
-        if (s == null) return false;
-        if (isSame(s, t)) return true;
-        return isSubtree(s.left, t) || isSubtree(s.right, t);
+
+class Solution {
+    boolean flag = false;
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if(root == null) return false;
+        if(root.val == subRoot.val){
+            flag = flag || isSameTree(root, subRoot);
+        }
+       return flag || isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot); 
     }
-    
-    private boolean isSame(TreeNode s, TreeNode t) {
-        if (s == null && t == null) return true;
-        if (s == null || t == null) return false;
-        
-        if (s.val != t.val) return false;
-        
-        return isSame(s.left, t.left) && isSame(s.right, t.right);
+
+    public boolean isSameTree(TreeNode p, TreeNode q){
+        if(p == null && q == null) return true;
+        if(p == null && q != null) return false;
+        if(p != null && q == null) return false;
+
+        if(p.val != q.val) return false;
+
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 }
